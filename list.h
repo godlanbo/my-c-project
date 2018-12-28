@@ -39,7 +39,6 @@ list* creat()
 {
 	list *pHead = NULL;
 	list *pNew = NULL, *pEnd = NULL;
-	//pEnd = pNew = (list*)malloc(sizeof(list));
 	
 	while (1)
 	{
@@ -64,7 +63,6 @@ list* creat()
 			}
 		}
 	}
-	//free(pNew);
 	return pHead;
 }
 
@@ -87,13 +85,10 @@ void printlist(list *pHead)
 list* inserthead(list *pHead)
 {
 	list *pNew;
-	//pNew = (list*)malloc(sizeof(list));
-
 	pNew = getnode();
 
 	pNew->pNext = pHead;
 	pHead = pNew;
-	//free(pNew);
 	return pHead;
 }
 
@@ -130,7 +125,7 @@ list* deletelist(list *pHead,char *no)
 	return pHead;
 }
 
-//向链表(除头部)插入一个节点(有序插入)
+//向链表插入一个节点(有序插入)
 list* insertlist(list *pHead,list *pNewnode)
 {
 	list *pTemp = pHead;
@@ -155,7 +150,6 @@ list* insertlist(list *pHead,list *pNewnode)
 		pTemp = pTemp->pNext;
 	pNewnode->pNext = pTemp->pNext;
 	pTemp->pNext = pNewnode;*/
-
 	return pHead;
 }
 
@@ -232,12 +226,8 @@ list* loadlist(char *filename)
 			}
 		}
 		else
-		{
 			free(pNew);
-			//return NULL;
-		}
 	}
-	free(pNew);
 	fclose(fp);
 	return pHead;
 }
