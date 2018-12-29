@@ -6,12 +6,11 @@
 
 #define High 30
 #define Wideth 30
-#define ENEMY_LIMIT 12
+#define ENEMY_LIMIT 13
 #define SPEED_LIMIT 10
 #define SPEED_PRISE 4
 #define REFRESH_FREQUENCY 70
 
-int boom_flag = 0;
 int all[High][Wideth] = { 0 };
 int enemy_x, enemy_y, prise_x, prise_y;
 int all_enemy_number = 4, now_enemy_number = 0;
@@ -115,7 +114,6 @@ void boom()
 				all[i][j] = 0,count++;
 	printf("\a");
 	color_boom();
-	boom_flag = 1;
 	grades += count;
 }
 //道具移动模块
@@ -172,7 +170,7 @@ void fire_level()
 		if (all[position_x - 1][position_y + 1] != -1)
 			all[position_x - 1][position_y + 1] = 2;
 	}
-	else if (level_fire >= 2)
+	else if (level_fire == 2)
 	{
 		all[position_x - 1][position_y] = 2;
 		if (all[position_x - 1][position_y - 1] != -1)
@@ -180,6 +178,25 @@ void fire_level()
 		if (all[position_x - 1][position_y + 1] != -1)
 			all[position_x - 1][position_y + 1] = 2;
 	}
+	else if (level_fire >= 3)
+	{
+		if (all[position_x - 1][position_y - 1] != -1)
+			all[position_x - 1][position_y - 1] = 2;
+		if (all[position_x - 1][position_y + 1] != -1)
+			all[position_x - 1][position_y + 1] = 2;
+		if (all[position_x - 1][position_y - 2] != -1)
+			all[position_x - 1][position_y - 2] = 2;
+		if (all[position_x - 1][position_y + 2] != -1)
+			all[position_x - 1][position_y + 2] = 2;
+	}
+	/*else if (level_fire >= 4)
+	{
+		all[position_x - 1][position_y] = 2;
+		if (all[position_x - 1][position_y - 1] != -1)
+			all[position_x - 1][position_y - 1] = 2;
+		if (all[position_x - 1][position_y + 1] != -1)
+			all[position_x - 1][position_y + 1] = 2;
+	}*/
 }
 //武器更新模块
 void fire()
@@ -205,13 +222,10 @@ void enemy()
 {
 	now_enemy_number = 0;
 	for (int i = 0; i < High; i++)
-	{
 		for (int j = 0; j < Wideth; j++)
-		{
 			if (all[i][j] == -2)
 				now_enemy_number++;
-		}
-	}
+
 	if (enemy_speed < (SPEED_LIMIT - level_enemy_speed))
 		enemy_speed++;
 	else
@@ -224,8 +238,8 @@ void enemy()
 					all[i][j] = 0;
 					if (all[i + 1][j] == 2)
 					{
-						continue;
 						grades++;
+						continue;
 					}
 					else if (all[i + 1][j] == 1)
 					{
